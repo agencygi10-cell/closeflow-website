@@ -1,0 +1,100 @@
+"use client";
+
+import { motion } from "framer-motion";
+import {
+  LayoutDashboard,
+  MessageSquareText,
+  Target,
+  Workflow,
+  BarChart3,
+  Megaphone,
+} from "lucide-react";
+
+const features = [
+  {
+    icon: LayoutDashboard,
+    title: "Dashboard de clientes",
+    text: "Visualiza la cantidad de leads, conversaciones activas y conversiones en un solo lugar.",
+  },
+  {
+    icon: MessageSquareText,
+    title: "Atención de mensajes",
+    text: "Respondemos por ti en Instagram, WhatsApp y demás canales con respuestas que venden.",
+  },
+  {
+    icon: Target,
+    title: "Cierre de ventas",
+    text: "Guiamos al cliente desde el primer contacto hasta el agendamiento confirmado.",
+  },
+  {
+    icon: Workflow,
+    title: "Flujos organizados",
+    text: "Automatizamos procesos para que dejes de operar en el caos y empieces a escalar.",
+  },
+  {
+    icon: BarChart3,
+    title: "Claridad en números",
+    text: "Reportes simples y reales sobre tus conversiones, ROAS y ticket promedio.",
+  },
+  {
+    icon: Megaphone,
+    title: "Pautas en Meta + contenido",
+    text: "Manejamos tus campañas en Meta Ads y te asesoramos en el contenido que tu audiencia quiere ver.",
+  },
+];
+
+export default function WhatWeDo() {
+  return (
+    <section
+      id="que-hacemos"
+      className="relative py-24 sm:py-32 border-t border-brand-purple/10"
+    >
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl"
+        >
+          <span className="text-xs uppercase tracking-[0.25em] text-brand-pink">
+            Qué hacemos
+          </span>
+          <h2 className="mt-4 font-display text-3xl sm:text-5xl font-bold leading-tight">
+            Transformamos tu negocio en una{" "}
+            <span className="text-gradient">máquina de ventas</span> organizada.
+          </h2>
+          <p className="mt-6 text-base sm:text-lg text-brand-lilac/80">
+            Te entregamos un sistema completo: dashboard de clientes,
+            atención de mensajes, cierre de ventas, organización de flujos y
+            claridad total en tus números. Además manejamos tus pautas en Meta y
+            te asesoramos con el contenido que debes publicar.
+          </p>
+        </motion.div>
+
+        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {features.map((f, i) => (
+            <motion.div
+              key={f.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5, delay: i * 0.05 }}
+              className="card-glass group rounded-2xl p-6 transition-all duration-300"
+            >
+              <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-brand-purple to-brand-pink text-white shadow-glow transition-transform duration-300 group-hover:scale-110">
+                <f.icon size={20} />
+              </div>
+              <h3 className="font-display text-lg font-semibold text-white">
+                {f.title}
+              </h3>
+              <p className="mt-2 text-sm text-brand-lilac/70 leading-relaxed">
+                {f.text}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
