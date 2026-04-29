@@ -6,26 +6,26 @@ import { Cog, Zap, Compass, TrendingUp, ArrowUpRight } from "lucide-react";
 const services = [
   {
     icon: Cog,
-    title: "GoHighLevel Setup & Automation",
-    desc: "Configuración completa de tu CRM en GoHighLevel: pipelines, automatizaciones, calendarios y embudos listos para vender mientras tú trabajas.",
-    points: ["Pipelines personalizados", "Automatizaciones 24/7", "Integración con WhatsApp + IG"],
+    title: "Sistema CRM & Automatizaciones",
+    desc: "Pipelines, automatizaciones y calendarios listos para vender mientras tú trabajas.",
+    points: ["Pipelines personalizados", "Automatizaciones 24/7", "WhatsApp + Instagram"],
   },
   {
     icon: Zap,
     title: "Meta Ads",
-    desc: "Campañas en Facebook e Instagram pensadas para tu nicho. Bajamos el costo por lead y subimos el ROAS con creativos y copy validados.",
+    desc: "Campañas en Facebook e Instagram que bajan el costo por lead y suben el ROAS.",
     points: ["Estrategia de pauta", "Creativos que convierten", "Optimización semanal"],
   },
   {
     icon: Compass,
     title: "Asesorías de contenido",
-    desc: "Te decimos exactamente qué publicar, cómo grabarlo y cuándo subirlo. Contenido que atrae a tu cliente ideal y posiciona tu marca.",
+    desc: "Te decimos qué publicar, cómo grabarlo y cuándo subirlo.",
     points: ["Calendario editorial", "Guiones y hooks", "Dirección de marca"],
   },
   {
     icon: TrendingUp,
     title: "Asesorías para escalar",
-    desc: "Acompañamiento estratégico para llevar tu estudio o centro al siguiente nivel: precios, equipo, sucursales y sistemas.",
+    desc: "Acompañamiento para llevar tu negocio al siguiente nivel: precios, equipo y sistemas.",
     points: ["Estrategia de crecimiento", "Modelo financiero", "Procesos replicables"],
   },
 ];
