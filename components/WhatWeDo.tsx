@@ -14,32 +14,32 @@ const features = [
   {
     icon: LayoutDashboard,
     title: "Dashboard de clientes",
-    text: "Visualiza la cantidad de leads, conversaciones activas y conversiones en un solo lugar.",
+    text: "Tus leads, conversaciones y conversiones en un solo lugar.",
   },
   {
     icon: MessageSquareText,
     title: "Atención de mensajes",
-    text: "Respondemos por ti en Instagram, WhatsApp y demás canales con respuestas que venden.",
+    text: "Respondemos por ti en Instagram y WhatsApp con respuestas que venden.",
   },
   {
     icon: Target,
     title: "Cierre de ventas",
-    text: "Guiamos al cliente desde el primer contacto hasta el agendamiento confirmado.",
+    text: "Del primer mensaje al agendamiento confirmado.",
   },
   {
     icon: Workflow,
     title: "Flujos organizados",
-    text: "Automatizamos procesos para que dejes de operar en el caos y empieces a escalar.",
+    text: "Automatizamos los procesos que hoy te quitan tiempo.",
   },
   {
     icon: BarChart3,
     title: "Claridad en números",
-    text: "Reportes simples y reales sobre tus conversiones, ROAS y ticket promedio.",
+    text: "Reportes simples de conversiones, ROAS y ticket promedio.",
   },
   {
     icon: Megaphone,
-    title: "Pautas en Meta + contenido",
-    text: "Manejamos tus campañas en Meta Ads y te asesoramos en el contenido que tu audiencia quiere ver.",
+    title: "Pauta + contenido",
+    text: "Manejamos tus campañas y te decimos qué publicar.",
   },
 ];
 
@@ -65,10 +65,8 @@ export default function WhatWeDo() {
             <span className="text-gradient">máquina de ventas</span> organizada.
           </h2>
           <p className="mt-6 text-base sm:text-lg text-brand-lilac/80">
-            Te entregamos un sistema completo: dashboard de clientes,
-            atención de mensajes, cierre de ventas, organización de flujos y
-            claridad total en tus números. Además manejamos tus pautas en Meta y
-            te asesoramos con el contenido que debes publicar.
+            Un sistema completo: leads, mensajes, ventas, pauta y contenido.
+            Todo medido, todo claro.
           </p>
         </motion.div>
 
