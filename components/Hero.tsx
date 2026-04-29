@@ -77,9 +77,8 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="mt-6 max-w-2xl text-base sm:text-lg text-brand-lilac/80"
           >
-            Sistema CRM completo para estudios de tatuaje y centros de belleza que
-            quieren escalar. Atendemos mensajes, cerramos ventas y manejamos tus
-            anuncios — todo en un solo dashboard.
+            Atendemos tus mensajes, cerramos tus ventas y manejamos tus anuncios —
+            todo en un solo dashboard.
           </motion.p>
 
           <motion.div
