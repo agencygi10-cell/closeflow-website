@@ -14,17 +14,17 @@ const testimonials = [
   {
     name: "Estudio de tatuajes",
     location: "Los Angeles, CA",
-    text: "Antes perdíamos clientes porque no podíamos contestar a tiempo. Con CloseFlow se contesta solo y los días de trabajo se nos llenan.",
+    text: "Antes perdíamos clientes por no contestar a tiempo. Con CloseFlow los días se nos llenan solos.",
   },
   {
     name: "Centro de belleza",
     location: "San Diego, CA",
-    text: "El dashboard nos cambió la vida. Por primera vez sabemos cuántos clientes nuevos entran por semana y cuánto cuesta cada uno.",
+    text: "Por primera vez sabemos cuántos clientes nuevos entran por semana y cuánto cuesta cada uno.",
   },
   {
     name: "Barbería premium",
     location: "Miami, FL",
-    text: "Nos hicieron las pautas, los flujos y nos enseñaron qué publicar. Pasamos de inconsistencia a tener agenda llena dos meses adelante.",
+    text: "Pasamos de inconsistencia a tener agenda llena dos meses adelante.",
   },
 ];
 
