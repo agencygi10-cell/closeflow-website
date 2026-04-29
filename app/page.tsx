@@ -4,6 +4,7 @@ import WhatWeDo from "@/components/WhatWeDo";
 import Services from "@/components/Services";
 import SuccessStories from "@/components/SuccessStories";
 import HowItWorks from "@/components/HowItWorks";
+import FAQ from "@/components/FAQ";
 import LeadForm from "@/components/LeadForm";
 import Footer from "@/components/Footer";
 
@@ -16,6 +17,7 @@ export default function Home() {
       <Services />
       <SuccessStories />
       <HowItWorks />
+      <FAQ />
       <LeadForm />
       <Footer />
     </main>
