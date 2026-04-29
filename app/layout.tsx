@@ -17,10 +17,9 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "CloseFlow System | El partner que organiza tu caos y multiplica tus ventas",
   description:
-    "Sistema CRM completo para estudios de tatuaje y centros de belleza que quieren escalar. GoHighLevel, Meta Ads y asesorías para multiplicar tus ventas.",
+    "Sistema CRM para estudios de tatuaje y centros de belleza que quieren escalar. Mensajes, ventas, pauta y contenido — todo en un solo lugar.",
   keywords: [
     "CRM",
-    "GoHighLevel",
     "Meta Ads",
     "estudios de tatuaje",
     "centros de belleza",
