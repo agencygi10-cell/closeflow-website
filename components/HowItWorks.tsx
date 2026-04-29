@@ -7,17 +7,17 @@ const steps = [
   {
     n: "01",
     title: "Diagnóstico",
-    text: "Auditamos tu negocio: leads, mensajes, ventas y contenido. Identificamos dónde se pierde dinero.",
+    text: "Auditamos tu negocio e identificamos dónde se pierde dinero.",
   },
   {
     n: "02",
     title: "Setup del sistema",
-    text: "Configuramos tu CRM, automatizaciones, pipelines y calendarios en GoHighLevel.",
+    text: "Configuramos tu CRM, automatizaciones, pipelines y calendarios.",
   },
   {
     n: "03",
     title: "Operación + escala",
-    text: "Atendemos mensajes, cerramos citas, optimizamos pauta y ajustamos contenido cada semana.",
+    text: "Atendemos mensajes, cerramos citas y ajustamos pauta cada semana.",
   },
 ];
 
