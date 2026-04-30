@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import Logo from "./Logo";
 
 export default function Hero() {
@@ -54,8 +54,12 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.05 }}
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-purple/30 bg-brand-purple/10 px-4 py-1.5 text-xs sm:text-sm text-brand-lilac"
           >
-            <Sparkles size={14} className="text-brand-pink" />
-            CRM + Ads + Asesorías para escalar
+            <span className="flex gap-0.5 text-yellow-400">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <Star key={i} size={12} fill="currentColor" />
+              ))}
+            </span>
+            +20 marcas escaladas
           </motion.div>
 
           <motion.h1
@@ -64,11 +68,9 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="font-display text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.05] tracking-tight"
           >
-            <span className="text-white">CloseFlow:</span>
+            <span className="text-white">Escalamos las ventas de</span>
             <br className="hidden sm:block" />{" "}
-            <span className="text-gradient">El partner que organiza tu caos</span>
-            <br className="hidden sm:block" />{" "}
-            <span className="text-white">y multiplica tus ventas.</span>
+            <span className="text-gradient">tu servicio en solo 90 días.</span>
           </motion.h1>
 
           <motion.p
@@ -77,8 +79,8 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="mt-6 max-w-2xl text-base sm:text-lg text-brand-lilac/80"
           >
-            Atendemos tus mensajes, cerramos tus ventas y manejamos tus anuncios —
-            todo en un solo dashboard.
+            Aplicamos el sistema que ya usamos en +20 marcas para convertir y
+            fidelizar clientes.
           </motion.p>
 
           <motion.div
@@ -103,28 +105,6 @@ export default function Hero() {
             >
               Ver casos de éxito
             </a>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.6 }}
-            className="mt-16 grid grid-cols-3 gap-6 sm:gap-12 text-center"
-          >
-            {[
-              { k: "+40%", v: "Conversión promedio" },
-              { k: "24/7", v: "Atención de mensajes" },
-              { k: "1", v: "Dashboard, todo claro" },
-            ].map((s) => (
-              <div key={s.v} className="flex flex-col">
-                <span className="font-display text-2xl sm:text-3xl font-bold text-gradient">
-                  {s.k}
-                </span>
-                <span className="text-xs sm:text-sm text-brand-lilac/70">
-                  {s.v}
-                </span>
-              </div>
-            ))}
           </motion.div>
         </div>
       </div>
