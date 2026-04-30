@@ -1,14 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { TrendingUp, Users, DollarSign, Clock, Quote } from "lucide-react";
-
-const stats = [
-  { icon: TrendingUp, k: "+40%", v: "Aumento promedio en conversiones" },
-  { icon: Users, k: "+1.2k", v: "Leads atendidos al mes" },
-  { icon: DollarSign, k: "3.8x", v: "ROAS promedio en Meta Ads" },
-  { icon: Clock, k: "<5 min", v: "Tiempo de respuesta a leads" },
-];
+import { Quote, TrendingUp } from "lucide-react";
 
 const testimonials = [
   {
@@ -51,28 +44,38 @@ export default function SuccessStories() {
           </h2>
         </motion.div>
 
-        <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {stats.map((s, i) => (
-            <motion.div
-              key={s.v}
-              initial={{ opacity: 0, scale: 0.92 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: i * 0.06 }}
-              className="card-glass rounded-2xl p-5 sm:p-6"
-            >
-              <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-purple to-brand-pink text-white">
-                <s.icon size={18} />
+        {/* Highlight ROAS */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6 }}
+          className="relative mt-12 overflow-hidden rounded-3xl border border-brand-purple/25 bg-gradient-to-br from-brand-purple/15 via-brand-pink/5 to-transparent p-8 sm:p-12"
+        >
+          <div
+            aria-hidden
+            className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-gradient-to-br from-brand-purple to-brand-pink opacity-20 blur-3xl"
+          />
+          <div className="relative flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-5">
+              <div className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-purple to-brand-pink text-white shadow-glow">
+                <TrendingUp size={26} />
               </div>
-              <div className="mt-4 font-display text-2xl sm:text-3xl font-bold text-gradient">
-                {s.k}
+              <div>
+                <p className="text-xs uppercase tracking-[0.2em] text-brand-lilac/70">
+                  ROAS promedio
+                </p>
+                <p className="mt-2 font-display text-5xl sm:text-6xl font-bold text-gradient leading-none">
+                  8x – 10x
+                </p>
               </div>
-              <div className="mt-1 text-xs sm:text-sm text-brand-lilac/70">
-                {s.v}
-              </div>
-            </motion.div>
-          ))}
-        </div>
+            </div>
+            <p className="max-w-md text-sm sm:text-base text-brand-lilac/80 leading-relaxed">
+              Por cada $1 invertido en pauta, nuestros clientes generan entre $8
+              y $10 en ventas. Eso es lo que ya estamos haciendo, en serio.
+            </p>
+          </div>
+        </motion.div>
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-5">
           {testimonials.map((t, i) => (
@@ -86,7 +89,7 @@ export default function SuccessStories() {
             >
               <Quote className="text-brand-pink" size={22} />
               <blockquote className="mt-4 text-sm sm:text-base text-brand-lilac/85 leading-relaxed">
-                "{t.text}"
+                &ldquo;{t.text}&rdquo;
               </blockquote>
               <figcaption className="mt-5 border-t border-brand-purple/20 pt-4">
                 <div className="font-display text-sm font-semibold text-white">
@@ -97,23 +100,6 @@ export default function SuccessStories() {
             </motion.figure>
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mt-12 text-center"
-        >
-          <a
-            href="https://drive.google.com/drive/folders/1dd7_idE_k3-OTEUWhXo0zfXs83YpwcBC?usp=drive_link"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-ghost inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-brand-lilac"
-          >
-            Ver más casos en video
-          </a>
-        </motion.div>
       </div>
     </section>
   );
