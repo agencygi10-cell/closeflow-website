@@ -27,11 +27,6 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#servicios" className="hover:text-white">
-                  Servicios
-                </a>
-              </li>
-              <li>
                 <a href="#casos" className="hover:text-white">
                   Casos de éxito
                 </a>
