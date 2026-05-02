@@ -13,10 +13,13 @@ const partners = [
 ];
 
 export default function Partners() {
+  // Duplicate for seamless infinite marquee
+  const row = [...partners, ...partners];
+
   return (
     <section
       id="partners"
-      className="relative py-24 sm:py-32 border-t border-brand-purple/10"
+      className="relative py-24 sm:py-32 border-t border-brand-purple/10 overflow-hidden"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -33,21 +36,29 @@ export default function Partners() {
             Nuestros <span className="text-gradient">Partners</span>
           </h2>
         </motion.div>
+      </div>
 
-        <div className="mx-auto mt-12 grid max-w-5xl grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3 sm:gap-4">
-          {partners.map((p, i) => (
-            <motion.div
-              key={p}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="flex aspect-[5/3] items-center justify-center rounded-2xl border border-brand-purple/20 bg-black/60 p-3 transition-all hover:border-brand-pink/40 hover:bg-black/80"
+      <div className="relative mt-12">
+        {/* fade edges */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 sm:w-32 bg-gradient-to-r from-[#050008] to-transparent"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 sm:w-32 bg-gradient-to-l from-[#050008] to-transparent"
+        />
+
+        <div className="flex animate-scroll-x gap-3 sm:gap-4 px-4">
+          {row.map((p, i) => (
+            <div
+              key={i}
+              className="shrink-0 flex h-20 w-44 sm:h-24 sm:w-56 items-center justify-center rounded-2xl border border-brand-purple/20 bg-black/60 p-3 transition-all hover:border-brand-pink/40 hover:bg-black/80"
             >
-              <span className="font-display text-sm sm:text-base font-semibold text-white/85 text-center">
+              <span className="font-display text-sm sm:text-base font-semibold text-white/90 text-center whitespace-nowrap">
                 {p}
               </span>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
