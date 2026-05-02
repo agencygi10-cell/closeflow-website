@@ -15,7 +15,7 @@ const testimonials = [
     text: "Por primera vez sabemos cuántos clientes nuevos entran por semana y cuánto cuesta cada uno.",
   },
   {
-    name: "Barbería premium",
+    name: "Estudio de belleza premium",
     location: "Miami, FL",
     text: "Pasamos de inconsistencia a tener agenda llena dos meses adelante.",
   },
