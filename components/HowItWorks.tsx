@@ -17,7 +17,7 @@ const steps = [
   {
     n: "03",
     title: "Operación + escala",
-    text: "Atendemos mensajes, cerramos citas y ajustamos pauta cada semana.",
+    text: "Optimizamos pauta, ajustamos contenido y revisamos números cada semana.",
   },
 ];
 
@@ -99,7 +99,7 @@ export default function HowItWorks() {
                 {[
                   { l: "Leads", v: "248" },
                   { l: "Citas", v: "112" },
-                  { l: "ROAS", v: "3.8x" },
+                  { l: "ROAS", v: "10x" },
                 ].map((k) => (
                   <div
                     key={k.l}
