@@ -15,11 +15,11 @@ const faqs = [
   },
   {
     q: "¿Qué incluye exactamente?",
-    a: "CRM, atención de mensajes, cierre de ventas, organización de flujos, pauta en Meta y asesoría de contenido.",
+    a: "CRM, organización de flujos, pauta en Meta y asesoría de contenido.",
   },
   {
     q: "¿Funciona para mi nicho?",
-    a: "Trabajamos con estudios de tatuaje, centros de belleza, barberías y spas. Si entras en alguna de estas categorías, sí.",
+    a: "Trabajamos con estudios de tatuaje, centros de belleza y spas. Si entras en alguna de estas categorías, sí.",
   },
   {
     q: "¿Tengo que dejar mis herramientas actuales?",
