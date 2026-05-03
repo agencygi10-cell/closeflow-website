@@ -13,7 +13,7 @@ import { Play } from "lucide-react";
 const VIDEO_CONFIG = {
   youtubeId: "" as string,
   vimeoId: "" as string,
-  mp4Src: "" as string,
+  mp4Src: "/videos/closeflow-hero.mp4" as string,
   poster: "" as string, // opcional: imagen de portada para el <video> tag
 };
 
