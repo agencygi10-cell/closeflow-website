@@ -36,7 +36,7 @@ export default function LeadForm() {
   return (
     <section
       id="contacto"
-      className="relative py-24 sm:py-32 border-t border-brand-purple/10"
+      className="relative py-14 sm:py-20 border-t border-brand-purple/10"
     >
       <div
         aria-hidden

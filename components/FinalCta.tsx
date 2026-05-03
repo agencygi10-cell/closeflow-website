@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function FinalCta() {
   return (
-    <section className="relative overflow-hidden py-24 sm:py-36 border-t border-brand-purple/10">
+    <section className="relative overflow-hidden py-14 sm:py-20 border-t border-brand-purple/10">
       <div aria-hidden className="absolute inset-0 grid-bg" />
       <div
         aria-hidden

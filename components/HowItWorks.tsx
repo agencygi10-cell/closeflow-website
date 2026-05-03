@@ -25,7 +25,7 @@ export default function HowItWorks() {
   return (
     <section
       id="como-funciona"
-      className="relative py-24 sm:py-32 border-t border-brand-purple/10"
+      className="relative py-14 sm:py-20 border-t border-brand-purple/10"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div

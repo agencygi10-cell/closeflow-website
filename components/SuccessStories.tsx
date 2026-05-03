@@ -5,18 +5,15 @@ import { Quote, TrendingUp } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Estudio de tatuajes",
-    location: "Los Angeles, CA",
+    name: "Luis Amaya Tattoo",
     text: "Antes perdíamos clientes por no contestar a tiempo. Con CloseFlow los días se nos llenan solos.",
   },
   {
-    name: "Centro de belleza",
-    location: "San Diego, CA",
+    name: "Yurani Vargas",
     text: "Por primera vez sabemos cuántos clientes nuevos entran por semana y cuánto cuesta cada uno.",
   },
   {
-    name: "Estudio de belleza premium",
-    location: "Miami, FL",
+    name: "Atta Tattoo",
     text: "Pasamos de inconsistencia a tener agenda llena dos meses adelante.",
   },
 ];
@@ -25,7 +22,7 @@ export default function SuccessStories() {
   return (
     <section
       id="casos"
-      className="relative py-24 sm:py-32 border-t border-brand-purple/10"
+      className="relative py-14 sm:py-20 border-t border-brand-purple/10"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -39,8 +36,8 @@ export default function SuccessStories() {
             Casos de éxito
           </span>
           <h2 className="mt-4 font-display text-3xl sm:text-5xl font-bold leading-tight">
-            Resultados reales en{" "}
-            <span className="text-gradient">estudios y centros de belleza</span>.
+            Resultados reales{" "}
+            <span className="text-gradient">para nuestros clientes</span>.
           </h2>
         </motion.div>
 
@@ -95,7 +92,6 @@ export default function SuccessStories() {
                 <div className="font-display text-sm font-semibold text-white">
                   {t.name}
                 </div>
-                <div className="text-xs text-brand-lilac/60">{t.location}</div>
               </figcaption>
             </motion.figure>
           ))}
