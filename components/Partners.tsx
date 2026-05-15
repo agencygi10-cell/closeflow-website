@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 
 const partners = [
   "Meta",
-  "Google",
-  "TikTok Ads",
+  "Facebook Ads",
   "Instagram",
-  "WhatsApp",
+  "Google",
+  "WhatsApp Business",
   "Shopify",
   "Klaviyo",
 ];
@@ -33,7 +33,7 @@ export default function Partners() {
             Partners
           </span>
           <h2 className="mt-6 font-display text-3xl sm:text-5xl font-bold leading-tight">
-            Nuestros <span className="text-gradient">Partners</span>
+            Our <span className="text-gradient">Partners</span>
           </h2>
         </motion.div>
       </div>

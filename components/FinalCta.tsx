@@ -30,8 +30,10 @@ export default function FinalCta() {
           transition={{ duration: 0.7 }}
           className="font-display text-3xl sm:text-5xl md:text-6xl font-bold leading-[1.1] tracking-tight"
         >
-          Somos tan buenos en lo que hacemos, que estás aquí gracias a un
-          anuncio.
+          We&apos;re so good at scaling tattoo artists{" "}
+          <span className="text-gradient">
+            you&apos;re here because of one of our own ads.
+          </span>
         </motion.h2>
 
         <motion.div
@@ -42,10 +44,10 @@ export default function FinalCta() {
           className="mt-10"
         >
           <a
-            href="#contacto"
+            href="#contact"
             className="btn-primary group inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-semibold text-white"
           >
-            Agendar llamada
+            Book a call
             <ArrowRight
               size={18}
               className="transition-transform group-hover:translate-x-1"

@@ -114,7 +114,7 @@ function Placeholder() {
       <div className="relative flex flex-col items-center gap-4 text-center px-6">
         <button
           type="button"
-          aria-label="Reproducir video"
+          aria-label="Play video"
           className="group relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-brand-purple to-brand-pink text-white shadow-glow transition-transform hover:scale-105"
         >
           <span
@@ -124,10 +124,10 @@ function Placeholder() {
           <Play size={28} className="ml-1 relative" fill="currentColor" />
         </button>
         <p className="font-display text-sm sm:text-base font-semibold text-white">
-          Video testimonios — disponible pronto
+          Video testimonials — coming soon
         </p>
         <p className="text-xs sm:text-sm text-brand-lilac/60 max-w-md">
-          Estamos editando los clips reales de nuestros clientes
+          We&apos;re editing real clips from our tattoo artists
         </p>
       </div>
     </div>

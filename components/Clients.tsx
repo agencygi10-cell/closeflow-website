@@ -13,8 +13,8 @@ const clients = [
   "Kata Reyes",
   "Yurani Vargas",
   "Dani Rincón",
-  "Beauty Center",
-  "JP Smiles",
+  "Luisa Maya Tattoo",
+  "Sebas Ink Studio",
 ];
 
 export default function Clients() {
@@ -31,7 +31,7 @@ export default function Clients() {
         className="mb-8 text-center"
       >
         <span className="text-xs uppercase tracking-[0.3em] text-brand-lilac/60">
-          Marcas que ya escalamos
+          Tattoo artists we&apos;ve scaled
         </span>
       </motion.div>
 

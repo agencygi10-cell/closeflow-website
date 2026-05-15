@@ -11,29 +11,29 @@ export default function Footer() {
           <div>
             <Logo />
             <p className="mt-4 text-sm text-brand-lilac/70 leading-relaxed max-w-xs">
-              El partner que organiza tu caos y multiplica tus ventas. Sistema
-              CRM para estudios y centros de belleza.
+              The agency that scales tattoo artists to 15x–32x ROAS. CRM, ads
+              and creative direction, all in one place.
             </p>
           </div>
 
           <div>
             <h4 className="font-display text-sm font-semibold text-white">
-              Navegación
+              Navigation
             </h4>
             <ul className="mt-4 space-y-2 text-sm text-brand-lilac/70">
               <li>
-                <a href="#que-hacemos" className="hover:text-white">
-                  Qué hacemos
+                <a href="#what-we-do" className="hover:text-white">
+                  What we do
                 </a>
               </li>
               <li>
-                <a href="#casos" className="hover:text-white">
-                  Casos de éxito
+                <a href="#cases" className="hover:text-white">
+                  Success stories
                 </a>
               </li>
               <li>
-                <a href="#como-funciona" className="hover:text-white">
-                  Cómo funciona
+                <a href="#how-it-works" className="hover:text-white">
+                  How it works
                 </a>
               </li>
               <li>
@@ -42,8 +42,8 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#contacto" className="hover:text-white">
-                  Contacto
+                <a href="#contact" className="hover:text-white">
+                  Contact
                 </a>
               </li>
             </ul>
@@ -51,7 +51,7 @@ export default function Footer() {
 
           <div>
             <h4 className="font-display text-sm font-semibold text-white">
-              Contacto
+              Contact
             </h4>
             <ul className="mt-4 space-y-3 text-sm text-brand-lilac/70">
               <li className="flex items-center gap-2">
@@ -76,7 +76,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <MapPin size={15} className="text-brand-pink" />
-                California, EEUU
+                California, USA
               </li>
             </ul>
           </div>
@@ -84,11 +84,10 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-brand-purple/15 pt-6 sm:flex-row">
           <p className="text-xs text-brand-lilac/50">
-            © {new Date().getFullYear()} CloseFlow System. Todos los derechos
-            reservados.
+            © {new Date().getFullYear()} CloseFlow System. All rights reserved.
           </p>
           <p className="text-xs text-brand-lilac/50">
-            Hecho con propósito en California.
+            Built with purpose in California.
           </p>
         </div>
       </div>

@@ -6,11 +6,11 @@ import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
 
 const links = [
-  { href: "#que-hacemos", label: "Qué hacemos" },
-  { href: "#casos", label: "Casos" },
-  { href: "#como-funciona", label: "Cómo funciona" },
+  { href: "#what-we-do", label: "What we do" },
+  { href: "#cases", label: "Cases" },
+  { href: "#how-it-works", label: "How it works" },
   { href: "#faq", label: "FAQ" },
-  { href: "#contacto", label: "Contacto" },
+  { href: "#contact", label: "Contact" },
 ];
 
 export default function Navbar() {
@@ -51,10 +51,10 @@ export default function Navbar() {
               </a>
             ))}
             <a
-              href="#contacto"
+              href="#contact"
               className="btn-primary rounded-full px-5 py-2 text-sm font-semibold text-white"
             >
-              Agenda gratis
+              Book free
             </a>
           </div>
 
@@ -89,11 +89,11 @@ export default function Navbar() {
                 </a>
               ))}
               <a
-                href="#contacto"
+                href="#contact"
                 onClick={() => setOpen(false)}
                 className="btn-primary mt-2 rounded-full px-5 py-3 text-center text-sm font-semibold text-white"
               >
-                Agenda gratis
+                Book free
               </a>
             </div>
           </motion.div>

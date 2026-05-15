@@ -6,25 +6,25 @@ import { CheckCircle2 } from "lucide-react";
 const steps = [
   {
     n: "01",
-    title: "Diagnóstico",
-    text: "Auditamos tu negocio e identificamos dónde se pierde dinero.",
+    title: "Brand audit",
+    text: "We analyze your calendar, your ads and your style to find where you're losing clients.",
   },
   {
     n: "02",
-    title: "Setup del sistema",
-    text: "Configuramos tu CRM, automatizaciones, pipelines y calendarios.",
+    title: "System setup",
+    text: "We configure your CRM, automations, booking calendar and ad campaigns, ready to run.",
   },
   {
     n: "03",
-    title: "Operación + escala",
-    text: "Optimizamos pauta, ajustamos contenido y revisamos números cada semana.",
+    title: "Operation + scale",
+    text: "We optimize ads weekly, direct your content and grow your ROAS month over month.",
   },
 ];
 
 export default function HowItWorks() {
   return (
     <section
-      id="como-funciona"
+      id="how-it-works"
       className="relative py-14 sm:py-20 border-t border-brand-purple/10"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -36,11 +36,11 @@ export default function HowItWorks() {
           className="max-w-3xl"
         >
           <span className="text-xs uppercase tracking-[0.25em] text-brand-pink">
-            Cómo funciona
+            How it works
           </span>
           <h2 className="mt-4 font-display text-3xl sm:text-5xl font-bold leading-tight">
-            Tu dashboard, <span className="text-gradient">tus números</span>,
-            cero excusas.
+            Your dashboard, <span className="text-gradient">your numbers</span>,
+            zero excuses.
           </h2>
         </motion.div>
 
@@ -97,9 +97,9 @@ export default function HowItWorks() {
               {/* KPI cards */}
               <div className="grid grid-cols-3 gap-3 mb-4">
                 {[
-                  { l: "Leads", v: "248" },
-                  { l: "Citas", v: "112" },
-                  { l: "ROAS", v: "10x" },
+                  { l: "Leads", v: "284" },
+                  { l: "Bookings", v: "126" },
+                  { l: "ROAS", v: "23x" },
                 ].map((k) => (
                   <div
                     key={k.l}
@@ -119,7 +119,7 @@ export default function HowItWorks() {
               <div className="rounded-xl border border-brand-purple/25 bg-gradient-to-b from-brand-purple/10 to-transparent p-4">
                 <div className="mb-3 flex items-center justify-between">
                   <div className="text-xs text-brand-lilac/70">
-                    Leads por día
+                    Leads per day
                   </div>
                   <div className="text-xs text-brand-pink">+24%</div>
                 </div>
@@ -154,9 +154,9 @@ export default function HowItWorks() {
               {/* Fake list */}
               <div className="mt-4 space-y-2">
                 {[
-                  "Conversación cerrada · Agenda confirmada",
-                  "Lead nuevo desde Instagram · Auto-asignado",
-                  "Campaña Meta optimizada · CPL -18%",
+                  "Conversation closed · Booking confirmed",
+                  "New lead from Instagram · Auto-assigned",
+                  "Meta campaign optimized · CPL -18%",
                 ].map((t) => (
                   <div
                     key={t}

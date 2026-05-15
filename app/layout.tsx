@@ -15,34 +15,35 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "CloseFlow System | El partner que organiza tu caos y multiplica tus ventas",
+  title:
+    "CloseFlow System | The growth partner for tattoo artists",
   description:
-    "Sistema CRM para estudios de tatuaje y centros de belleza que quieren escalar. Pauta, contenido y crecimiento — todo en un solo lugar.",
+    "Growth agency for tattoo artists. Meta Ads, CRM, content direction and automation. 15x to 32x ROAS — all in one place.",
   keywords: [
-    "CRM",
+    "tattoo artists agency",
     "Meta Ads",
-    "estudios de tatuaje",
-    "centros de belleza",
-    "automatización ventas",
+    "tattoo marketing",
+    "CRM",
+    "marketing automation",
     "CloseFlow",
-    "marketing digital",
     "California",
+    "tattoo growth",
   ],
   authors: [{ name: "CloseFlow System" }],
   metadataBase: new URL("https://closeflow.system"),
   openGraph: {
-    title: "CloseFlow System | Organiza tu caos y multiplica tus ventas",
+    title: "CloseFlow System | We scale tattoo artists",
     description:
-      "Sistema CRM completo para estudios de tatuaje y centros de belleza que quieren escalar.",
+      "Growth agency for tattoo artists. 15x to 32x ROAS in under 90 days.",
     type: "website",
-    locale: "es_ES",
+    locale: "en_US",
     siteName: "CloseFlow System",
   },
   twitter: {
     card: "summary_large_image",
     title: "CloseFlow System",
     description:
-      "El partner que organiza tu caos y multiplica tus ventas.",
+      "Growth agency for tattoo artists. 15x to 32x ROAS in under 90 days.",
   },
   robots: {
     index: true,
@@ -60,7 +61,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body className="font-sans">{children}</body>
     </html>
   );

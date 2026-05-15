@@ -182,33 +182,33 @@ const features: {
   Ill: () => ReactNode;
 }[] = [
   {
-    title: "Dashboard de clientes",
-    text: "Tus leads, conversaciones y conversiones en un solo lugar.",
+    title: "Booking dashboard",
+    text: "Clients, messages and appointments in one place. Zero leads lost.",
     Ill: DashboardIll,
   },
   {
-    title: "Asesorías de contenido",
-    text: "Te decimos qué publicar, cómo grabarlo y cuándo subirlo.",
+    title: "Content that sells tattoos",
+    text: "We tell you what to film, how to shoot it and when to post it to attract the right client.",
     Ill: ContentIll,
   },
   {
-    title: "Asesorías para escalar",
-    text: "Acompañamiento para llevar tu negocio al siguiente nivel: precios, equipo y sistemas.",
+    title: "Personal brand growth",
+    text: "Coaching to raise your rates, position your style and grow without losing your essence.",
     Ill: ScaleIll,
   },
   {
-    title: "Flujos organizados",
-    text: "Automatizamos los procesos que hoy te quitan tiempo.",
+    title: "Automated flows",
+    text: "Replies, confirmations and reminders on autopilot. You only focus on tattooing.",
     Ill: FlowIll,
   },
   {
-    title: "Claridad en números",
-    text: "Reportes simples de conversiones, ROAS y ticket promedio.",
+    title: "Clear numbers",
+    text: "Simple reports on ROAS, cost per booking and average ticket. You know what works.",
     Ill: NumbersIll,
   },
   {
-    title: "Pauta + contenido",
-    text: "Manejamos tus campañas y te decimos qué publicar.",
+    title: "Ads built for tattoo artists",
+    text: "Meta (Facebook + Instagram) campaigns built around the tattoo client. 15x to 32x ROAS, for real.",
     Ill: AdsIll,
   },
 ];
@@ -216,7 +216,7 @@ const features: {
 export default function WhatWeDo() {
   return (
     <section
-      id="que-hacemos"
+      id="what-we-do"
       className="relative py-14 sm:py-20 border-t border-brand-purple/10"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -228,15 +228,15 @@ export default function WhatWeDo() {
           className="max-w-3xl"
         >
           <span className="text-xs uppercase tracking-[0.25em] text-brand-pink">
-            Qué hacemos
+            What we do
           </span>
           <h2 className="mt-4 font-display text-3xl sm:text-5xl font-bold leading-tight">
-            Transformamos tu negocio en una{" "}
-            <span className="text-gradient">máquina de ventas</span> organizada.
+            We turn your career into an{" "}
+            <span className="text-gradient">organized client machine</span>.
           </h2>
           <p className="mt-6 text-base sm:text-lg text-brand-lilac/80">
-            Un sistema completo: leads, mensajes, ventas, pauta y contenido.
-            Todo medido, todo claro.
+            A complete system for tattoo artists: ads, content, bookings,
+            messages and sales. You tattoo, we fill your calendar.
           </p>
         </motion.div>
 

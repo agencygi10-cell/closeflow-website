@@ -6,28 +6,28 @@ import { Plus } from "lucide-react";
 
 const faqs = [
   {
-    q: "¿Cuánto cuesta el servicio?",
-    a: "Depende del tamaño y los objetivos de tu negocio. En la consulta gratuita te damos una propuesta clara, sin letra chica.",
+    q: "Do you only work with tattoo artists?",
+    a: "Yes. We work exclusively with tattoo artists — not studios, not other niches. That's how we hit 15x to 32x ROAS: we understand deeply how tattoos sell, how the client thinks and how a tattoo artist's personal brand is built.",
   },
   {
-    q: "¿En cuánto tiempo veo resultados?",
-    a: "Configuramos tu sistema en 7–14 días. Los primeros leads y citas empiezan a entrar en cuestión de semanas.",
+    q: "How much does it cost?",
+    a: "It depends on the size of your brand and your goals. On the free consult we review your case and send you a clear proposal, no fine print.",
   },
   {
-    q: "¿Qué incluye exactamente?",
-    a: "CRM, organización de flujos, pauta en Meta y asesoría de contenido.",
+    q: "How long until I see results?",
+    a: "We set up your system in 7–14 days. The first paid bookings start coming in within weeks — and in under 90 days we hit the ROAS we're known for.",
   },
   {
-    q: "¿Funciona para mi nicho?",
-    a: "Trabajamos con estudios de tatuaje, centros de belleza y spas. Si entras en alguna de estas categorías, sí.",
+    q: "What does it include exactly?",
+    a: "CRM system, automated calendar, Meta ads (Facebook + Instagram), creative direction and weekly content coaching. All measured in one dashboard.",
   },
   {
-    q: "¿Tengo que dejar mis herramientas actuales?",
-    a: "No. Integramos lo que ya usas (WhatsApp, Instagram, calendario) con tu nuevo sistema.",
+    q: "Do I need a lot of followers?",
+    a: "No. We work with tattoo artists from 1K followers up to established names. What matters is your work, not your vanity metric.",
   },
   {
-    q: "¿Y si no estoy en California?",
-    a: "Trabajamos con clientes en todo EEUU y Latinoamérica.",
+    q: "Do I have to drop the tools I already use?",
+    a: "No. We integrate what you already use (WhatsApp, Instagram, calendar) with your new system. You don't change your flow, we level it up.",
   },
 ];
 
@@ -51,7 +51,7 @@ export default function FAQ() {
             FAQ
           </span>
           <h2 className="mt-4 font-display text-3xl sm:text-5xl font-bold leading-tight">
-            Preguntas <span className="text-gradient">frecuentes</span>.
+            Frequently asked <span className="text-gradient">questions</span>.
           </h2>
         </motion.div>
 
