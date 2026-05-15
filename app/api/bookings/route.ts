@@ -4,8 +4,8 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 type Booking = {
-  date: string; // YYYY-MM-DD (California)
-  time: string; // HH:mm (California)
+  date: string;
+  time: string;
   name?: string;
   business?: string;
   phone?: string;
@@ -20,16 +20,10 @@ const CA_TZ = "America/Los_Angeles";
 
 const KEY = "closeflow:bookings:v1";
 
-/**
- * Storage strategy:
- *  - If Vercel KV is configured (KV_REST_API_URL + KV_REST_API_TOKEN env vars),
- *    persist bookings there. Free tier on Vercel covers this easily.
- *  - Otherwise use an in-memory fallback that lives for the lifetime of the
- *    serverless instance. Good enough to demo locally; in production install
- *    @vercel/kv and set the env vars to get cross-instance persistence.
- */
+const NOTIFY_FROM = "CloseFlow <notifications@closeflowsystem.com>";
+const NOTIFY_TO = "bookings@closeflowsystem.com";
 
-// In-memory fallback (single-process)
+// In-memory fallback for local dev or if KV is temporarily unavailable.
 const memory: { bookings: Booking[] } = (globalThis as any).__cf_mem ?? {
   bookings: [],
 };
@@ -75,7 +69,7 @@ async function saveBookings(bookings: Booking[]): Promise<void> {
         body: JSON.stringify(JSON.stringify(bookings)),
       });
     } catch {
-      // ignore; memory already updated
+      // ignore; in-memory already updated
     }
   }
 }
@@ -112,9 +106,145 @@ function sanitizeString(s: unknown, max = 200): string {
   return s.trim().slice(0, max);
 }
 
+function formatHumanDate(ymd: string): string {
+  const [y, m, d] = ymd.split("-").map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d, 19, 0, 0));
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone: CA_TZ,
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }).format(dt);
+}
+
+function formatHumanTime(time24: string): string {
+  const [h, m] = time24.split(":").map(Number);
+  const ampm = h >= 12 ? "PM" : "AM";
+  const h12 = h % 12 === 0 ? 12 : h % 12;
+  return `${h12}:${m.toString().padStart(2, "0")} ${ampm}`;
+}
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function buildEmailHtml(b: {
+  date: string;
+  time: string;
+  name: string;
+  business: string;
+  phone: string;
+}): string {
+  const safeName = escapeHtml(b.name);
+  const safeBusiness = escapeHtml(b.business);
+  const safePhone = escapeHtml(b.phone);
+  const dateStr = formatHumanDate(b.date);
+  const timeStr = formatHumanTime(b.time);
+  return `<!doctype html>
+<html>
+  <body style="margin:0;padding:0;background:#04000a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#f5f3ff;">
+    <div style="max-width:560px;margin:0 auto;padding:32px 24px;">
+      <div style="background:linear-gradient(135deg,#6b21a8 0%,#a855f7 50%,#ec4899 100%);border-radius:20px;padding:1px;">
+        <div style="background:#0a0014;border-radius:19px;padding:32px 28px;">
+          <div style="font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:#ec4899;font-weight:600;">
+            New booking
+          </div>
+          <h1 style="margin:12px 0 0 0;font-size:28px;line-height:1.2;color:#fff;font-weight:700;">
+            ${safeName}<br/>
+            <span style="background:linear-gradient(135deg,#c4b5fd,#ec4899);-webkit-background-clip:text;background-clip:text;color:transparent;">${safeBusiness}</span>
+          </h1>
+
+          <div style="margin-top:28px;border-top:1px solid rgba(168,85,247,0.2);padding-top:24px;">
+            <div style="margin-bottom:18px;">
+              <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(196,181,253,0.6);">Date</div>
+              <div style="margin-top:4px;font-size:18px;color:#fff;font-weight:600;">${dateStr}</div>
+            </div>
+            <div style="margin-bottom:18px;">
+              <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(196,181,253,0.6);">Time (California, PST/PDT)</div>
+              <div style="margin-top:4px;font-size:18px;color:#fff;font-weight:600;">${timeStr}</div>
+            </div>
+            <div>
+              <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(196,181,253,0.6);">Phone</div>
+              <div style="margin-top:4px;font-size:18px;font-weight:600;">
+                <a href="tel:${safePhone}" style="color:#ec4899;text-decoration:none;">${safePhone}</a>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:28px;padding:14px 16px;background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);border-radius:12px;font-size:13px;color:rgba(196,181,253,0.85);line-height:1.5;">
+            Make the call at the scheduled time. The client expects you to reach out — don't wait for them.
+          </div>
+        </div>
+      </div>
+      <p style="text-align:center;margin-top:20px;font-size:11px;color:rgba(196,181,253,0.45);">
+        Sent from closeflowsystem.com · ${new Date().toISOString()}
+      </p>
+    </div>
+  </body>
+</html>`;
+}
+
+function buildEmailText(b: {
+  date: string;
+  time: string;
+  name: string;
+  business: string;
+  phone: string;
+}): string {
+  return [
+    `New CloseFlow booking`,
+    ``,
+    `Date: ${formatHumanDate(b.date)}`,
+    `Time: ${formatHumanTime(b.time)} (California, PST/PDT)`,
+    ``,
+    `Name: ${b.name}`,
+    `Tattoo artist / handle: ${b.business}`,
+    `Phone: ${b.phone}`,
+    ``,
+    `Make the call at the scheduled time. The client expects you to reach out.`,
+    ``,
+    `— Sent from closeflowsystem.com`,
+  ].join("\n");
+}
+
+async function sendBookingEmail(b: {
+  date: string;
+  time: string;
+  name: string;
+  business: string;
+  phone: string;
+}): Promise<void> {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return; // local dev fallback: silently skip
+  try {
+    await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${key}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: NOTIFY_FROM,
+        to: [NOTIFY_TO],
+        subject: `New booking — ${b.name} · ${formatHumanDate(b.date)} ${formatHumanTime(b.time)} PST`,
+        html: buildEmailHtml(b),
+        text: buildEmailText(b),
+        reply_to: NOTIFY_TO,
+      }),
+    });
+  } catch {
+    // never let email failure break the booking flow
+  }
+}
+
 export async function GET() {
   const all = await loadBookings();
-  // Only return future-relevant bookings (today onward) and strip PII
   const today = ymdInCA(new Date());
   const visible = all
     .filter((b) => b.date >= today)
@@ -189,6 +319,9 @@ export async function POST(req: Request) {
     },
   ];
   await saveBookings(next);
+
+  // Fire-and-forget notification; never block the booking flow on it.
+  void sendBookingEmail({ date, time, name, business, phone });
 
   const visible = next
     .filter((b) => b.date >= today)

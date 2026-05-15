@@ -248,28 +248,6 @@ export default function LeadForm() {
       }
       setBookings(Array.isArray(data.bookings) ? data.bookings : bookings);
       setSubmitted(true);
-
-      // Notify via mailto (best-effort)
-      const subject = encodeURIComponent(
-        `New CloseFlow booking — ${name} (${business})`
-      );
-      const body = encodeURIComponent(
-        [
-          `New booking via closeflow-website.vercel.app`,
-          ``,
-          `Date: ${formatHumanDate(selectedDate)}`,
-          `Time: ${formatHumanTime(selectedTime)} (California time, PST/PDT)`,
-          ``,
-          `Name: ${name}`,
-          `Tattoo artist / handle: ${business}`,
-          `Phone: ${phone}`,
-        ].join("\n")
-      );
-      const a = document.createElement("a");
-      a.href = `mailto:agency.gi10@gmail.com?subject=${subject}&body=${body}`;
-      a.target = "_blank";
-      a.rel = "noopener";
-      a.click();
     } catch {
       setError("Connection problem. Please try again.");
     } finally {
