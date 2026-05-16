@@ -495,9 +495,12 @@ export async function POST(req: Request) {
   ];
   await saveBookings(next);
 
-  // Fire-and-forget notifications; never block the booking flow on them.
-  void sendBookingEmail({ date, time, name, business, phone });
-  void sendTelegramAlert({ date, time, name, business, phone });
+  // Await notifications so Vercel doesn't kill the function before the
+  // requests actually go out. allSettled lets one fail without affecting the other.
+  await Promise.allSettled([
+    sendBookingEmail({ date, time, name, business, phone }),
+    sendTelegramAlert({ date, time, name, business, phone }),
+  ]);
 
   const visible = next
     .filter((b) => b.date >= today)
