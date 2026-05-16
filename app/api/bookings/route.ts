@@ -44,8 +44,10 @@ async function loadBookings(): Promise<Booking[]> {
       const data = (await res.json()) as { result: string | null };
       if (!data.result) return [];
       try {
-        const parsed = JSON.parse(data.result);
-        return Array.isArray(parsed) ? parsed : [];
+        let parsed: unknown = JSON.parse(data.result);
+        // Older writes accidentally double-encoded — unwrap if needed.
+        if (typeof parsed === "string") parsed = JSON.parse(parsed);
+        return Array.isArray(parsed) ? (parsed as Booking[]) : [];
       } catch {
         return [];
       }
@@ -68,7 +70,7 @@ async function saveBookings(bookings: Booking[]): Promise<void> {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(JSON.stringify(bookings)),
+        body: JSON.stringify(bookings),
       });
     } catch {
       // ignore; in-memory already updated
