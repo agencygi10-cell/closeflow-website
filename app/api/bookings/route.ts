@@ -25,6 +25,13 @@ const NOTIFY_TO = "bookings@closeflowsystem.com";
 const CALENDAR_ATTENDEE = "agency.gi10@gmail.com";
 const CALL_DURATION_MIN = 30;
 
+// ──────────────────────────────────────────────────────────────────────
+// Calendar reminders — edit these to change how early Google Calendar
+// alerts you before each call. Add or remove entries freely.
+// Each value is "how many minutes before the call". 60 = one hour.
+// ──────────────────────────────────────────────────────────────────────
+const REMINDER_MINUTES_BEFORE = [60, 15];
+
 // In-memory fallback for local dev or if KV is temporarily unavailable.
 const memory: { bookings: Booking[] } = (globalThis as any).__cf_mem ?? {
   bookings: [],
@@ -303,19 +310,53 @@ function buildIcs(b: {
     "STATUS:CONFIRMED",
     "TRANSP:OPAQUE",
     "SEQUENCE:0",
-    "BEGIN:VALARM",
-    "TRIGGER:-PT30M",
-    "ACTION:DISPLAY",
-    "DESCRIPTION:Call in 30 minutes",
-    "END:VALARM",
-    "BEGIN:VALARM",
-    "TRIGGER:-PT10M",
-    "ACTION:DISPLAY",
-    "DESCRIPTION:Call in 10 minutes",
-    "END:VALARM",
+    ...REMINDER_MINUTES_BEFORE.flatMap((m) => [
+      "BEGIN:VALARM",
+      `TRIGGER:-PT${m}M`,
+      "ACTION:DISPLAY",
+      `DESCRIPTION:Call in ${m} minutes`,
+      "END:VALARM",
+    ]),
     "END:VEVENT",
     "END:VCALENDAR",
   ].join("\r\n");
+}
+
+async function sendTelegramAlert(b: {
+  date: string;
+  time: string;
+  name: string;
+  business: string;
+  phone: string;
+}): Promise<void> {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) return;
+  const message = [
+    "🔔 *New CloseFlow booking*",
+    "",
+    `👤 *${b.name}* — ${b.business}`,
+    "",
+    `📅 ${formatHumanDate(b.date)}`,
+    `🕐 ${formatHumanTime(b.time)} PST`,
+    `📞 \`${b.phone}\``,
+    "",
+    "_Make the call at the scheduled time. The client expects you to reach out._",
+  ].join("\n");
+  try {
+    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message,
+        parse_mode: "Markdown",
+        disable_web_page_preview: true,
+      }),
+    });
+  } catch {
+    // never let telegram failure break the booking
+  }
 }
 
 async function sendBookingEmail(b: {
@@ -434,8 +475,9 @@ export async function POST(req: Request) {
   ];
   await saveBookings(next);
 
-  // Fire-and-forget notification; never block the booking flow on it.
+  // Fire-and-forget notifications; never block the booking flow on them.
   void sendBookingEmail({ date, time, name, business, phone });
+  void sendTelegramAlert({ date, time, name, business, phone });
 
   const visible = next
     .filter((b) => b.date >= today)
