@@ -108,6 +108,20 @@ function weekdayInCA(ymd: string): number {
   return ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(wk);
 }
 
+// Returns the current wall-clock HH:mm in California.
+function nowHmInCA(): string {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: CA_TZ,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(new Date());
+  const hRaw = parts.find((p) => p.type === "hour")!.value;
+  const m = parts.find((p) => p.type === "minute")!.value;
+  const h = hRaw === "24" ? "00" : hRaw;
+  return `${h.padStart(2, "0")}:${m.padStart(2, "0")}`;
+}
+
 function isValidYmd(s: string): boolean {
   return /^\d{4}-\d{2}-\d{2}$/.test(s);
 }
@@ -437,6 +451,12 @@ export async function POST(req: Request) {
   if (date < today) {
     return NextResponse.json(
       { error: "You can't book a past date" },
+      { status: 400 }
+    );
+  }
+  if (date === today && time <= nowHmInCA()) {
+    return NextResponse.json(
+      { error: "That time has already passed today. Pick a later time or another day." },
       { status: 400 }
     );
   }

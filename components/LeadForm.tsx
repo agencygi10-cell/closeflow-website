@@ -48,6 +48,20 @@ function weekdayInCalifornia(d: Date): number {
   return ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(wk);
 }
 
+// Current wall-clock HH:mm in California, used to hide past slots for today.
+function nowHmInCalifornia(): string {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: CA_TZ,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(new Date());
+  const hRaw = parts.find((p) => p.type === "hour")!.value;
+  const m = parts.find((p) => p.type === "minute")!.value;
+  const h = hRaw === "24" ? "00" : hRaw;
+  return `${h.padStart(2, "0")}:${m.padStart(2, "0")}`;
+}
+
 // Stable per-week seed: returns same number for every date in the same Mon-Sun week
 function weekSeed(ymd: string): number {
   const [y, m, d] = ymd.split("-").map(Number);
@@ -207,14 +221,28 @@ export default function LeadForm() {
     if (!allowed.has(wk)) return { disabled: true, reason: "unavailable" };
     const taken = bookingsByDate.get(ymd) ?? [];
     if (taken.length >= MAX_PER_DAY) return { disabled: true, reason: "full" };
+    // If today and the last slot of the day has already passed, the day is effectively closed.
+    if (ymd === today) {
+      const nowHm = nowHmInCalifornia();
+      const stillUpcoming = ALL_SLOTS.some(
+        (s) => s > nowHm && !new Set(taken).has(s)
+      );
+      if (!stillUpcoming) return { disabled: true, reason: "past" };
+    }
     return { disabled: false };
   };
 
   const availableSlotsForSelected = useMemo(() => {
     if (!selectedDate) return [] as string[];
     const taken = new Set(bookingsByDate.get(selectedDate) ?? []);
-    return ALL_SLOTS.filter((s) => !taken.has(s));
-  }, [selectedDate, bookingsByDate]);
+    const isToday = selectedDate === today;
+    const nowHm = isToday ? nowHmInCalifornia() : null;
+    return ALL_SLOTS.filter((s) => {
+      if (taken.has(s)) return false;
+      if (nowHm && s <= nowHm) return false;
+      return true;
+    });
+  }, [selectedDate, bookingsByDate, today]);
 
   const canSubmit =
     selectedDate &&
