@@ -22,6 +22,8 @@ const KEY = "closeflow:bookings:v1";
 
 const NOTIFY_FROM = "CloseFlow <notifications@closeflowsystem.com>";
 const NOTIFY_TO = "bookings@closeflowsystem.com";
+const CALENDAR_ATTENDEE = "agency.gi10@gmail.com";
+const CALL_DURATION_MIN = 30;
 
 // In-memory fallback for local dev or if KV is temporarily unavailable.
 const memory: { bookings: Booking[] } = (globalThis as any).__cf_mem ?? {
@@ -213,6 +215,107 @@ function buildEmailText(b: {
   ].join("\n");
 }
 
+// Converts a YMD + HH:mm in California time to UTC YYYYMMDDTHHmmssZ for ICS.
+function toIcsUtc(ymd: string, hm: string, addMinutes = 0): string {
+  // Build a Date that represents "ymd hm" wall-clock time in California,
+  // then express it as UTC.
+  const [y, mo, d] = ymd.split("-").map(Number);
+  const [h, mi] = hm.split(":").map(Number);
+  // Approximate: assume the California offset for that date.
+  // Use Intl to get the timezone offset for that wall-clock moment.
+  const naiveUtc = Date.UTC(y, mo - 1, d, h, mi);
+  // Find what California shows for this UTC time, compute the gap, and adjust.
+  const localShown = new Intl.DateTimeFormat("en-US", {
+    timeZone: CA_TZ,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(new Date(naiveUtc));
+  const shownY = parseInt(localShown.find((p) => p.type === "year")!.value);
+  const shownMo = parseInt(localShown.find((p) => p.type === "month")!.value);
+  const shownD = parseInt(localShown.find((p) => p.type === "day")!.value);
+  let shownH = parseInt(localShown.find((p) => p.type === "hour")!.value);
+  const shownMi = parseInt(localShown.find((p) => p.type === "minute")!.value);
+  if (shownH === 24) shownH = 0;
+  const shownAsUtc = Date.UTC(shownY, shownMo - 1, shownD, shownH, shownMi);
+  const offsetMs = shownAsUtc - naiveUtc; // how far California is from UTC (negative)
+  const trueUtc = naiveUtc - offsetMs + addMinutes * 60_000;
+  const dt = new Date(trueUtc);
+  const pad = (n: number) => n.toString().padStart(2, "0");
+  return (
+    `${dt.getUTCFullYear()}${pad(dt.getUTCMonth() + 1)}${pad(dt.getUTCDate())}` +
+    `T${pad(dt.getUTCHours())}${pad(dt.getUTCMinutes())}${pad(dt.getUTCSeconds())}Z`
+  );
+}
+
+function escapeIcs(s: string): string {
+  return s
+    .replace(/\\/g, "\\\\")
+    .replace(/;/g, "\\;")
+    .replace(/,/g, "\\,")
+    .replace(/\n/g, "\\n");
+}
+
+function buildIcs(b: {
+  date: string;
+  time: string;
+  name: string;
+  business: string;
+  phone: string;
+}): string {
+  const uid = `${b.date}-${b.time.replace(":", "")}-${Date.now()}@closeflowsystem.com`;
+  const dtStart = toIcsUtc(b.date, b.time, 0);
+  const dtEnd = toIcsUtc(b.date, b.time, CALL_DURATION_MIN);
+  const dtStamp = new Date()
+    .toISOString()
+    .replace(/[-:]/g, "")
+    .replace(/\.\d{3}/, "");
+  const summary = escapeIcs(`Call with ${b.name} (${b.business})`);
+  const description = escapeIcs(
+    [
+      `Tattoo artist: ${b.business}`,
+      `Phone: ${b.phone}`,
+      ``,
+      `Make the call at the scheduled time. The client expects you to reach out — don't wait for them.`,
+    ].join("\n")
+  );
+  // ICS lines must be CRLF-terminated.
+  return [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//CloseFlow//Booking//EN",
+    "CALSCALE:GREGORIAN",
+    "METHOD:REQUEST",
+    "BEGIN:VEVENT",
+    `UID:${uid}`,
+    `DTSTAMP:${dtStamp}`,
+    `DTSTART:${dtStart}`,
+    `DTEND:${dtEnd}`,
+    `SUMMARY:${summary}`,
+    `DESCRIPTION:${description}`,
+    `ORGANIZER;CN=CloseFlow:mailto:notifications@closeflowsystem.com`,
+    `ATTENDEE;CN=CloseFlow;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=FALSE:mailto:${CALENDAR_ATTENDEE}`,
+    "STATUS:CONFIRMED",
+    "TRANSP:OPAQUE",
+    "SEQUENCE:0",
+    "BEGIN:VALARM",
+    "TRIGGER:-PT30M",
+    "ACTION:DISPLAY",
+    "DESCRIPTION:Call in 30 minutes",
+    "END:VALARM",
+    "BEGIN:VALARM",
+    "TRIGGER:-PT10M",
+    "ACTION:DISPLAY",
+    "DESCRIPTION:Call in 10 minutes",
+    "END:VALARM",
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ].join("\r\n");
+}
+
 async function sendBookingEmail(b: {
   date: string;
   time: string;
@@ -223,6 +326,8 @@ async function sendBookingEmail(b: {
   const key = process.env.RESEND_API_KEY;
   if (!key) return; // local dev fallback: silently skip
   try {
+    const ics = buildIcs(b);
+    const icsBase64 = Buffer.from(ics, "utf-8").toString("base64");
     await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -236,6 +341,13 @@ async function sendBookingEmail(b: {
         html: buildEmailHtml(b),
         text: buildEmailText(b),
         reply_to: NOTIFY_TO,
+        attachments: [
+          {
+            filename: "booking.ics",
+            content: icsBase64,
+            content_type: "text/calendar; method=REQUEST; charset=UTF-8",
+          },
+        ],
       }),
     });
   } catch {
