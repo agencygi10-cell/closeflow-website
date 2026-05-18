@@ -33,7 +33,6 @@ export default function ScalePage() {
   return (
     <main className="relative min-h-screen flex flex-col">
       <Hero />
-      <VideoBlock />
       <ClientsStrip />
       <Footer />
     </main>
@@ -116,10 +115,20 @@ function Hero() {
           while you tattoo.
         </motion.p>
 
+        {/* Hero video — drives conviction before the CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="mt-10 mx-auto max-w-3xl"
+        >
+          <VideoFrame />
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
+          transition={{ duration: 0.7, delay: 0.4 }}
           className="mt-10 flex flex-col items-center gap-3"
         >
           <a
@@ -141,7 +150,7 @@ function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.45 }}
+          transition={{ duration: 0.7, delay: 0.55 }}
           className="mt-14 grid grid-cols-3 gap-4 sm:gap-10 text-center"
         >
           {[
@@ -163,7 +172,7 @@ function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.6 }}
+          transition={{ duration: 0.7, delay: 0.7 }}
           className="mt-8 inline-flex items-center gap-2 text-xs text-brand-lilac/55"
         >
           <span className="flex gap-0.5 text-yellow-400">
@@ -178,68 +187,57 @@ function Hero() {
   );
 }
 
-/* ---------- VIDEO BLOCK ---------- */
-function VideoBlock() {
+/* ---------- VIDEO FRAME (embedded inside Hero) ---------- */
+function VideoFrame() {
   const { youtubeId, vimeoId, mp4Src, poster } = LP_VIDEO;
   const hasVideo = Boolean(youtubeId || vimeoId || mp4Src);
 
   return (
-    <section className="relative pb-16 sm:pb-24">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.7 }}
-          className="relative"
-        >
-          {/* Glow halo */}
-          <div
-            aria-hidden
-            className="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-brand-purple/40 via-brand-pink/20 to-transparent blur-2xl"
-          />
+    <div className="relative">
+      {/* Glow halo */}
+      <div
+        aria-hidden
+        className="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-brand-purple/40 via-brand-pink/20 to-transparent blur-2xl"
+      />
+      {/* Frame */}
+      <div className="relative overflow-hidden rounded-3xl border border-brand-purple/30 bg-black shadow-glow">
+        <div className="relative aspect-video w-full">
+          {youtubeId && (
+            <iframe
+              src={`https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1`}
+              title="CloseFlow — how we scale tattoo artists"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 h-full w-full"
+            />
+          )}
 
-          {/* Video frame */}
-          <div className="relative overflow-hidden rounded-3xl border border-brand-purple/30 bg-black shadow-glow">
-            <div className="relative aspect-video w-full">
-              {youtubeId && (
-                <iframe
-                  src={`https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1`}
-                  title="CloseFlow — how we scale tattoo artists"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="absolute inset-0 h-full w-full"
-                />
-              )}
+          {!youtubeId && vimeoId && (
+            <iframe
+              src={`https://player.vimeo.com/video/${vimeoId}?title=0&byline=0&portrait=0`}
+              title="CloseFlow — how we scale tattoo artists"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 h-full w-full"
+            />
+          )}
 
-              {!youtubeId && vimeoId && (
-                <iframe
-                  src={`https://player.vimeo.com/video/${vimeoId}?title=0&byline=0&portrait=0`}
-                  title="CloseFlow — how we scale tattoo artists"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  allowFullScreen
-                  className="absolute inset-0 h-full w-full"
-                />
-              )}
+          {!youtubeId && !vimeoId && mp4Src && (
+            <video
+              controls
+              playsInline
+              preload="metadata"
+              poster={poster || undefined}
+              className="absolute inset-0 h-full w-full object-cover"
+            >
+              <source src={mp4Src} type="video/mp4" />
+            </video>
+          )}
 
-              {!youtubeId && !vimeoId && mp4Src && (
-                <video
-                  controls
-                  playsInline
-                  preload="metadata"
-                  poster={poster || undefined}
-                  className="absolute inset-0 h-full w-full object-cover"
-                >
-                  <source src={mp4Src} type="video/mp4" />
-                </video>
-              )}
-
-              {!hasVideo && <VideoPlaceholder />}
-            </div>
-          </div>
-        </motion.div>
+          {!hasVideo && <VideoPlaceholder />}
+        </div>
       </div>
-    </section>
+    </div>
   );
 }
 
