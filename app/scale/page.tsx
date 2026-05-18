@@ -1,25 +1,49 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Star } from "lucide-react";
+import { ArrowRight, Play, Sparkles, Star } from "lucide-react";
 import Logo from "@/components/Logo";
 
 const BOOK_HREF = "/#contact";
+
+/**
+ * 🎬 LP VIDEO — when you have the file/url, set ONE of these and redeploy.
+ *
+ *   For an mp4 dropped in /public/videos/scale-hero.mp4:
+ *     mp4Src: "/videos/scale-hero.mp4"
+ *
+ *   For YouTube (just the id, ej "dQw4w9WgXcQ"):
+ *     youtubeId: "your_video_id"
+ *
+ *   For Vimeo (just the numeric id):
+ *     vimeoId: "987654321"
+ *
+ *   poster (optional): "/videos/scale-hero-poster.jpg" — cover image before play
+ *
+ * If all three are empty, a premium placeholder is shown.
+ */
+const LP_VIDEO = {
+  youtubeId: "" as string,
+  vimeoId: "" as string,
+  mp4Src: "" as string,
+  poster: "" as string,
+};
 
 export default function ScalePage() {
   return (
     <main className="relative min-h-screen flex flex-col">
       <Hero />
+      <VideoBlock />
       <ClientsStrip />
       <Footer />
     </main>
   );
 }
 
-/* ---------- HERO (the whole page, basically) ---------- */
+/* ---------- HERO ---------- */
 function Hero() {
   return (
-    <section className="relative flex-1 flex items-center pt-20 pb-16 sm:pt-24 sm:pb-20 overflow-hidden">
+    <section className="relative pt-20 pb-16 sm:pt-24 sm:pb-20 overflow-hidden">
       <div
         aria-hidden
         className="blob animate-float-slow"
@@ -151,6 +175,123 @@ function Hero() {
         </motion.div>
       </div>
     </section>
+  );
+}
+
+/* ---------- VIDEO BLOCK ---------- */
+function VideoBlock() {
+  const { youtubeId, vimeoId, mp4Src, poster } = LP_VIDEO;
+  const hasVideo = Boolean(youtubeId || vimeoId || mp4Src);
+
+  return (
+    <section className="relative pb-16 sm:pb-24">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7 }}
+          className="relative"
+        >
+          {/* Glow halo */}
+          <div
+            aria-hidden
+            className="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-brand-purple/40 via-brand-pink/20 to-transparent blur-2xl"
+          />
+
+          {/* Video frame */}
+          <div className="relative overflow-hidden rounded-3xl border border-brand-purple/30 bg-black shadow-glow">
+            <div className="relative aspect-video w-full">
+              {youtubeId && (
+                <iframe
+                  src={`https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1`}
+                  title="CloseFlow — how we scale tattoo artists"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="absolute inset-0 h-full w-full"
+                />
+              )}
+
+              {!youtubeId && vimeoId && (
+                <iframe
+                  src={`https://player.vimeo.com/video/${vimeoId}?title=0&byline=0&portrait=0`}
+                  title="CloseFlow — how we scale tattoo artists"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                  className="absolute inset-0 h-full w-full"
+                />
+              )}
+
+              {!youtubeId && !vimeoId && mp4Src && (
+                <video
+                  controls
+                  playsInline
+                  preload="metadata"
+                  poster={poster || undefined}
+                  className="absolute inset-0 h-full w-full object-cover"
+                >
+                  <source src={mp4Src} type="video/mp4" />
+                </video>
+              )}
+
+              {!hasVideo && <VideoPlaceholder />}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function VideoPlaceholder() {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand-deep via-brand-black to-brand-deep">
+      <div
+        aria-hidden
+        className="blob animate-float-slow"
+        style={{
+          width: 320,
+          height: 320,
+          top: "10%",
+          left: "20%",
+          background:
+            "radial-gradient(circle, rgba(168,85,247,0.45) 0%, transparent 60%)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="blob animate-pulse-slow"
+        style={{
+          width: 280,
+          height: 280,
+          bottom: "10%",
+          right: "20%",
+          background:
+            "radial-gradient(circle, rgba(236,72,153,0.4) 0%, transparent 65%)",
+        }}
+      />
+      <div aria-hidden className="absolute inset-0 grid-bg opacity-60" />
+
+      <div className="relative flex flex-col items-center gap-4 text-center px-6">
+        <button
+          type="button"
+          aria-label="Play video"
+          className="group relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-brand-purple to-brand-pink text-white shadow-glow transition-transform hover:scale-105"
+        >
+          <span
+            aria-hidden
+            className="absolute inset-0 animate-ping rounded-full bg-brand-pink/40"
+          />
+          <Play size={28} className="ml-1 relative" fill="currentColor" />
+        </button>
+        <p className="font-display text-sm sm:text-base font-semibold text-white">
+          See the system in action — coming soon
+        </p>
+        <p className="text-xs sm:text-sm text-brand-lilac/60 max-w-md">
+          Real tattoo artists, real bookings, real ROAS
+        </p>
+      </div>
+    </div>
   );
 }
 
